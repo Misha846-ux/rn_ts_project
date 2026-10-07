@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Counter from "../components/Counter";
 import { Categoryes, type Category } from "../components/Categoryes";
 import { Products, type Product } from "../components/Products";
+import { Sort } from "../components/Sort";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL;
 
@@ -30,6 +31,9 @@ export default function HomeScreen() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
     null,
   );
+  const [sortByName, setSortByName] = useState<boolean>(false);
+  const [sortByPriceUp, setSortByPriceUp] = useState<boolean>(false);
+  const [sortByPriceDown, setSortByPriceDown] = useState<boolean>(false);
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
@@ -76,7 +80,7 @@ export default function HomeScreen() {
 
   // Фільтрація товарів: за категорією ТА за пошуковим запитом
   const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
+    const result = products.filter((product) => {
       // Перетворення на String усуває помилки розбіжності типів (String vs Number)
       const matchesCategory = selectedCategoryId
         ? String(product.categoryId) === String(selectedCategoryId)
@@ -89,10 +93,22 @@ export default function HomeScreen() {
       const matchesSearch = product.title
         .toLowerCase()
         .includes(searchQuery.toLowerCase().trim());
+    
 
       return matchesCategory && matchesSearch && matchesFavorites;
     });
-  }, [products, selectedCategoryId, searchQuery, favoriteIds, showFavorites]);
+    if (sortByName) {
+      result.sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+    } else if (sortByPriceUp) {
+      result.sort((a, b) => a.price - b.price);
+    } else if (sortByPriceDown) {
+      result.sort((a, b) => b.price - a.price);
+    }
+
+    return result;
+  }, [products, selectedCategoryId, searchQuery, favoriteIds, showFavorites, sortByName, sortByPriceUp, sortByPriceDown]);
 
   const theme = {
     bg: isDarkMode ? "#121212" : "#FFFFFF",
@@ -270,6 +286,15 @@ export default function HomeScreen() {
           isDarkMode={isDarkMode}
           setShowFavorites={setShowFavorites}
           setSelectedCategoryId={setSelectedCategoryId}
+        />
+
+        <Sort
+          sortByName={sortByName}
+          sortByPriceUp={sortByPriceUp}
+          sortByPriceDown={sortByPriceDown}
+          setSortByName={setSortByName}
+          setSortByPriceUp={setSortByPriceUp}
+          setSortByPriceDown={setSortByPriceDown}
         />
 
         <Products
