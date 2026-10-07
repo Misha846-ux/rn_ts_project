@@ -14,7 +14,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <HomeScreen/>
+        <CategoryScreen/>
         <StatusBar style="auto" />
       </View>
     </SafeAreaProvider>

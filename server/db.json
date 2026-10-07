@@ -47,6 +47,12 @@
       "image": "❤️",
       "color": "#FfFF",
       "id": "8"
+    },
+    {
+      "name": "Treg",
+      "image": "Derfor",
+      "color": "Trevv",
+      "id": "ilDghuzJDhs"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

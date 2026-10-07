@@ -25,14 +25,8 @@ type CategoryesProps = {
   setSelectedCategoryId: Dispatch<SetStateAction<string | null>>;
 };
 
-export function Categoryes({
-  categories,
-  selectedCategoryId,
-  showFavorites,
-  isDarkMode,
-  setShowFavorites,
-  setSelectedCategoryId,
-}: CategoryesProps) {
+export function Categoryes({categories, selectedCategoryId, 
+showFavorites, isDarkMode, setShowFavorites, setSelectedCategoryId}: CategoryesProps) {
   const textPrimary = isDarkMode ? "#FFFFFF" : "#212121";
 
   return (
@@ -214,3 +208,4 @@ const styles = StyleSheet.create({
     lineHeight: 14,
   },
 });
+//

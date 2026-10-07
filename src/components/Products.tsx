@@ -26,13 +26,7 @@ type ProductsProps = {
   onFavoritePress: (productId: string) => Promise<void>;
 };
 
-export function Products({
-  products,
-  title,
-  isDarkMode,
-  favoriteIds,
-  onFavoritePress,
-}: ProductsProps) {
+export function Products({products, title, isDarkMode, favoriteIds, onFavoritePress,}: ProductsProps) {
   const theme = {
     cardBg: isDarkMode ? "#1E1E1E" : "#FAFAFA",
     textPrimary: isDarkMode ? "#FFFFFF" : "#212121",
